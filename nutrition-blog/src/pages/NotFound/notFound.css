@@ -1,0 +1,15 @@
+.error{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 200px;
+}
+
+.link-home{
+    text-decoration: none;
+    color: gray;
+    border: 1px solid;
+    padding: 2px;
+}

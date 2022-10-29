@@ -1,0 +1,23 @@
+header{   
+    color: white;
+    background-color: #4c89e3;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+header a{
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+header a + a{
+    margin-left: 20px;
+}
+
+a:hover{
+    color: black;
+}
