@@ -1,0 +1,24 @@
+.error{
+    width: 100%;
+    height: calc(100vh - 60px); /*WE GOT THE Header THAT TAKES 60px, SO, FOR THE SCROLLBAR NOT TO SHOW UP, WE CAN USE THE calc()*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error h2{
+    font-size: 35px;
+    padding-bottom: 10px;
+}
+
+.home-link{
+    text-decoration: none;
+    background-color: blueviolet;
+    color: white;
+    padding: 5px;
+}
+
+.home-link:hover{
+    color: black;
+}
