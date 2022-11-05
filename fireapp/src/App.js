@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import { db, auth } from './firebaseConnection';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 function App(){
   const[titulo, setTitulo] = useState('');
@@ -32,6 +32,27 @@ function App(){
       })
     }
     loadApp();
+  }, []);
+
+  //ANOTHER 'useEffect' TO KEEP THE LOGIN USER EVEN IF THE PAGE RELOADS
+  //OR CLOSES. THE LOGIN WILL ONLY BE GON ONCE THE LOGOUT BUTTON IS PRESSED
+  useEffect(() => {
+    async function checkLogin() {
+      onAuthStateChanged(auth, (user) => {
+        if(user){
+          //IF THERE'S ANY LOGGED USER
+          setUser(true);
+          setUserDetail({
+            uid: user.uid,
+            email: user.email,
+          })
+        } else{
+          setUser(false);
+          setUserDetail({});
+        }
+      })
+    }
+    checkLogin();
   }, []);
 
   async function handleAdd() {
@@ -159,13 +180,22 @@ function App(){
     })
   }
 
+
+  async function handleLogout() {
+    await signOut(auth)
+    setUser(false);
+    setUserDetail({});
+    alert('Usuário saiu');
+  }
+
   return(
     <div>
       <h1>Cadastrar Usuário</h1>
       {user === true && 
         <div>
           <strong>Seja bem-vindo(a)! Você está logado(a)</strong><br/>
-          <span>ID: {userDetail.uid} - Email: {userDetail.email}</span>
+          <span>ID: {userDetail.uid} - Email: {userDetail.email}</span><br/>
+          <button onClick={handleLogout}>Logout</button>
           <br/><br/>
         </div>  
       }
