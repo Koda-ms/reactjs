@@ -1,5 +1,5 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
-import { useState } from 'react';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { db } from './firebaseConnection';
 
 function App(){
@@ -7,7 +7,26 @@ function App(){
   const[age, setAge] = useState('');
   const[usersList, setUsersList] = useState([]); 
   const[userId, setUserId] = useState('');
-  
+
+  //A BETTER WAY TO UPDATE THE LIST ON TIME, BUT ONLY IN SOME CASES THE 'ON TIME UPDATING' IS NEEDED
+  useEffect(() => {
+    async function loadApp() {
+      const dataRef = onSnapshot(collection(db, "users"), (snapshot) => {
+        let listUsers = [];
+
+        snapshot.forEach((doc) => {
+          listUsers.push({
+            id: doc.id,
+            name: doc.data().name,
+            age: doc.data().age,
+          })
+        })
+        setUsersList(listUsers);
+      })
+    }
+    loadApp();
+  }, []);
+
   async function handleAdd() {
     //'setDoc' IS USED TO SET MANUALLY THE DATA
     // await setDoc(doc(db, "users", "3"), {
@@ -73,17 +92,12 @@ function App(){
     })
   }
 
-  async function handleDelete() {
-    const user = doc(db, "users", "1");
+  async function handleDelete(id) {
+    const userRef = doc(db, "users", id);
 
-    await getDoc(user)
+    await deleteDoc(userRef)
     .then(() => {
-      deleteDoc(user)
-      .then(() => alert('Usuário removido com sucesso.'))
-      .catch(() => alert('Usuário não existe.'))
-    })
-    .catch(() => {
-      alert('Usuário não existe.');
+      alert('Usuário removido com sucesso.');
     })
   }
 
@@ -115,7 +129,6 @@ function App(){
         <input type='text' placeholder='Idade' value={age} onChange={(e) => setAge(e.target.value)}/><br/>
         <button onClick={handleAdd}>Cadastrar</button><br/>
         <button onClick={handleSearch}>Buscar Usuário</button><br/>
-        <button onClick={handleDelete}>Remover Usuário</button><br/>
         <button onClick={handleUpdate}>Atualizar Usuário</button>
       </div>
 
@@ -126,6 +139,7 @@ function App(){
               <strong>ID: {user.id}</strong><br/>
               <span>Nome: {user.name}</span><br/>
               <span>Idade: {user.age}</span>
+              <button onClick={() => handleDelete(user.id)}>Excluir</button>
             </li>
           );
         })}
