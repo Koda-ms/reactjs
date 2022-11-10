@@ -1,0 +1,71 @@
+.home-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /*vh --> VIEW HEIGHT. THIS IS HAT KEEPS THE div ON THE CENTER FROM ALL SIDES*/
+    width: 100%;
+}
+
+.home-container h1{
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+.home-container span{
+    margin-bottom: 28px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 600px; /*BOTH HERE HELPS TO LET THE COMPONENT RESPONSIVE*/
+    margin: 5px;
+    padding: 8px;
+    border-radius: 6px;
+    background-color:rgb(178, 199, 199);
+}
+
+.form input{
+    height: 36px;
+    border: 0;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    padding: 0 8px;
+}
+
+.form button{
+    height: 36px;
+    border: 0;
+    border-radius: 4px;
+    padding: 4px 0;
+    background-color: #3366ff;
+    color: white;
+    font-size: 18px;
+}
+
+.form textarea{
+    height: 90px;
+    border: 0;
+    border-radius: 4px;
+    resize: none;
+    margin-bottom: 12px;
+}
+
+.signup{
+    font-size: 14px;
+    margin: 10px;
+    color: darkgray;
+}
+
+.signup a{
+    text-decoration: none;
+    margin-left: 5px;
+    color: white;
+    color: darkgray;
+}
+
+.signup a:hover{
+    text-decoration: underline;
+}
