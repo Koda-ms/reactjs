@@ -40,7 +40,7 @@ function Register(){
                 <input type='password' 
                     placeholder='Password' 
                     value={password} onChange={(e) => setPassword(e.target.value)}/>
-                <button type='submit'>Login</button>
+                <button type='submit'>Sign up</button>
             </form>
             <span className="signup">
                 Already have an account?

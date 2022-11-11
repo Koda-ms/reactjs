@@ -24,7 +24,6 @@
     margin: 5px;
     padding: 8px;
     border-radius: 6px;
-    background-color:rgb(178, 199, 199);
 }
 
 .form input{
@@ -50,6 +49,7 @@
     border: 0;
     border-radius: 4px;
     resize: none;
+    padding: 8px;
     margin-bottom: 12px;
 }
 
