@@ -1,13 +1,13 @@
+import { useContext } from "react";
 import { Route, Navigate } from "react-router-dom";
+import { AuthContext } from "../contexts/userAuth";
 
 function RouteWrapper({
     component: Component,
     isPrivate, //PROPERTY THAT IDENTIFIES IF A PAGE IS PRIVATE, THEREFORE, ONLY ACCESSED BY A LOGGED USER
     ...rest //THE REST OF PROPS THE COMPONENT HAS
 }){
-
-    const loading = false;
-    const signed = false;
+    const { signed, loading } = useContext(AuthContext);
 
     if(loading){
         return(
