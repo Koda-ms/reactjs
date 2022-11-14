@@ -1,6 +1,6 @@
-import { Route, Redirect } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 
-export default function RouteWrapper({
+function RouteWrapper({
     component: Component,
     isPrivate, //PROPERTY THAT IDENTIFIES IF A PAGE IS PRIVATE, THEREFORE, ONLY ACCESSED BY A LOGGED USER
     ...rest //THE REST OF PROPS THE COMPONENT HAS
@@ -17,11 +17,11 @@ export default function RouteWrapper({
 
     //IF THERE'S NO LOGGING AND THE PAGE IS PRIVATE
     if(!signed && isPrivate){
-        return <Redirect to='/signin'/>
+        return <Navigate to='/'/>
     }
     //IF THERE'S LOGGING AND THE PAGE ISN'T PRIVATE
     if(signed && !isPrivate){
-        return <Redirect to='/'/>
+        return <Navigate to='/home'/>
     }
 
     return(
@@ -33,3 +33,5 @@ export default function RouteWrapper({
 
     );
 }
+
+export default RouteWrapper;
