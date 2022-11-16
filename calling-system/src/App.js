@@ -8,7 +8,6 @@ import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 
 function App(){
-
   return(
     <AuthProvider>
       <BrowserRouter>
@@ -19,13 +18,15 @@ function App(){
           {/* REACT-ROUTER-DOM V6'S ROUTES DOESN'T WORK WITH COMPONENTS DIFFERENT FROM <Route> AFTER <Routes>
               SO THE PRIVATE PAGES GOTTA BE SETTED INSIDE THE element={} */}
           <Route path='/home' element={ 
-            <RouteWrapper component={ Home } isPrivate/>
+            //THE RouteWrapper IS NOT WORKING. GOTTA CHECK THAT LATER.
+            <RouteWrapper isPrivate>
+              <Home/>
+            </RouteWrapper>
           }/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
   );
-
 }
 
 export default App;

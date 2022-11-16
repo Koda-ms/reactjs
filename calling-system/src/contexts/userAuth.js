@@ -1,5 +1,6 @@
 import { useState, createContext, useEffect } from 'react';
 import firebase from '../services/dbConnection';
+import { toast } from 'react-toastify';
 
 export const AuthContext = createContext({});
 
@@ -13,7 +14,7 @@ function AuthProvider({ children }){
         //SO IT COULD LOAD ON THE SCREEN
         function loadStorage(){
             const storageUser = localStorage.getItem('SystemUser');
-
+          
             if(storageUser){
                 setUser(storageUser);
                 setLoading(false);
@@ -24,6 +25,32 @@ function AuthProvider({ children }){
         loadStorage();
     }, []);
 
+    //LOGIN USER FUNCTION
+    async function signIn(email, password){
+        setLoadingAuth(true);
+        await firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(async (value) => {
+           let uid = value.user.uid;
+
+           const userProfile = await firebase.firestore().collection('users').doc(uid).get();
+        
+           let data = {
+                uid: uid,
+                name: userProfile.data().name,
+                email: value.user.email,
+                avatarUrl: userProfile.data().avatarUrl
+            };
+            setUser(data);
+            storageUser(data);
+            setLoadingAuth(false);
+        })
+        .catch((error) => {
+            console.log(error);
+            setLoadingAuth(false);
+        })
+    }
+
+    //REGISTER USER FUNCTION
     async function signUp(name, email, password){
         setLoadingAuth(true);
         await firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -43,6 +70,7 @@ function AuthProvider({ children }){
                 setUser(data);
                 storageUser(data);
                 setLoadingAuth(false);
+                toast.success("Welcome to the platform!");
             })
         })
         .catch((error) => {
@@ -55,11 +83,24 @@ function AuthProvider({ children }){
         localStorage.setItem('SystemUser', JSON.stringify(data));
     }
 
+    //LOGOUT FUNCTION
+    async function signOut(){
+        await firebase.auth().signOut();
+        localStorage.removeItem('SystemUser');
+        setUser(null);
+    }
+    
     return(
         //TO WORK FINE, THE value 'signed' MUST BE PASSED AS A BOOLEAN, HOWEVER
         //THE const user IS AN OBJECT. SO, TO CONVERT IT, WE USE THE !! SIGN, THAT
         //RETURN true F THERE'S SOMETHING ON THE OBJECT, OR false IF THERE'S NOTHING
-        <AuthContext.Provider value={{ signed: !!user, user, loading, signUp }}>
+        <AuthContext.Provider value={{ signed: !!user, 
+            user, 
+            loading, 
+            signIn, 
+            signUp, 
+            signOut, 
+            loadingAuth }}>
             {children}
         </AuthContext.Provider>
     );
