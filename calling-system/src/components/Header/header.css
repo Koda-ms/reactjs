@@ -14,6 +14,18 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    height: 150px;
+}
+
+.sidebar div img{
+    width: 90px;
+    height: 90px;
+    display: block;
+    margin: auto;
+    border-radius: 50%;
+    filter: drop-shadow(2px 3px 6px #121212); /*SHADOW BEHIND THE IMAGE*/
+    -webkit-filter: drop-shadow(2px 3px 6px #121212);
+    object-fit: cover;
 }
 
 .sidebar div{ 
@@ -40,6 +52,12 @@
     color: white;
 }
 
+/*SETTINGS FOR THE TITLE COMPONENT*/
+.content{
+    margin-left: 200px;
+    padding: 1em 1.6em;
+}
+
 /* USING @media TO TURN THE PAGE RESPONSIVE */
 @media screen and (max-width: 700px){
     .sidebar{
@@ -58,6 +76,10 @@
 
     .sidebar a svg{
         display: none;
+    }
+
+    .content{
+        margin-left: 0;
     }
 }
 

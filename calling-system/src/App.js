@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 
 function App(){
   return(
@@ -23,6 +24,7 @@ function App(){
               <Home/>
             </RouteWrapper>
           }/>
+          <Route path='/settings' element={ <Profile/> }/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
