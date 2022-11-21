@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/userAuth';
 import { Link }  from 'react-router-dom';
 import { FiHome, FiUsers, FiSettings } from 'react-icons/fi';
@@ -8,10 +8,12 @@ import './header.css';
 function Header(){
     const { user } = useContext(AuthContext);
     
+    const[avatarUrl, setAvatarUrl] = useState(JSON.parse(user) && JSON.parse(user).avatarUrl);
+    
     return(
         <div className='sidebar'>
             <div>
-                <img src={JSON.parse(user).avatarUrl === null ? avatar : JSON.parse(user).avatarUrl } alt='Foto de perfil'/>
+                <img src={avatarUrl === null ? avatar : avatarUrl } alt='Foto de perfil'/>
             </div>
 
             <Link to='/home'>
