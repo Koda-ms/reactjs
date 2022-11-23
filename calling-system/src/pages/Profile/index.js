@@ -20,21 +20,21 @@ export default function Profile(){
         e.preventDefault();
         
         if(avatarImage === null && name !== ''){
-
+            
             await firebase.firestore().collection('users')
             .doc(user.uid)
             .update({
                 name: name
             }).then(() => {
+                console.log(name);
                 let data = {
-                    ...user
+                    ...user,
+                    name: name //THIS LINE ALLOWED THE LOCALSTORAGE TO UPDATE THE EDITED ATTRIBUTE
                 }
                 setUser(data);
                 storageUser(data);
             })
-
         }
-        
     }
     
     return(
@@ -64,19 +64,12 @@ export default function Profile(){
 
                         <br/>
                         <label>Name</label> <br/>
-                        {/* THE VALUE SHOWS UP, BUT WHEN THE PAGE REFRESHES IT DISAPPEARS */}
-                        <input type='text' value={ name } onChange={(e) => setName(e.target.value)}/> <br/>
                         
-                        {/*<label>Email</label> <br/>
-                        <input type='text' value={ email } disabled={true}/>
-                        <br/> 
-                         THE VALUE SHOWS UP, BUT IT CAN'T BE CHANGED
-                        <label>Name</label> <br/>
-                        <input type='text' value={ user ? user.name : '' } onChange={(e) => setName(e.target.value)}/> <br/>
+                        <input type='text' defaultValue={user ? user.name : ''} onChange={(e) => setName(e.target.value)}/> <br/>  
                         
                         <label>Email</label> <br/>
-                        <input type='text' value={ user ? user.email : '' } disabled={true}/>
-                        <br/>  */}
+                        <input type='text' defaultValue={user ? user.email : ''} disabled={true}/>
+                        <br/>
 
                         <button type='submit'>Save</button>
                     </form>
