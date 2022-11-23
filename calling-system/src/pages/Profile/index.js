@@ -9,21 +9,20 @@ import './profile.css';
 
 export default function Profile(){
     const { user, signOut, setUser, storageUser } = useContext(AuthContext);
-    
-    const[name, setName] = useState(JSON.parse(user).name);
-    const[email, setEmail] = useState(JSON.parse(user) && JSON.parse(user).email);
-    const[avatarUrl, setAvatarUrl] = useState(JSON.parse(user) && JSON.parse(user).avatarUrl);
+
+    const[name, setName] = useState(user && user.name);
+    const[email, setEmail] = useState(user && user.email);
+    const[avatarUrl, setAvatarUrl] = useState(user && user.avatarUrl);
     const[avatarImage, setAvatarImage] = useState(null);
 
-    console.log(JSON.parse(user).name);
-
+    //console.log(user);
     async function handleEdition(e){
         e.preventDefault();
         
         if(avatarImage === null && name !== ''){
 
             await firebase.firestore().collection('users')
-            .doc(JSON.parse(user).uid)
+            .doc(user.uid)
             .update({
                 name: name
             }).then(() => {
@@ -37,7 +36,7 @@ export default function Profile(){
         }
         
     }
-
+    
     return(
         <div>
             <Header/>
@@ -55,18 +54,30 @@ export default function Profile(){
                             </span>
 
                             <input type='file' accept='image/*' /> <br/>
+                            {/* THIS IS PROBABLY BEING A TRICK */}
                             { avatarUrl === null ? 
                                 <img src={avatar} width='250' height='250' alt='Profile'/>
                                 :
                                 <img src={avatarUrl} width='250' height='250' alt=''/>
                             }
                         </label>
+
                         <br/>
-                        <label>Name</label> <br/> {/* ONLY A  PALLIATIVE MEASURE*/}
-                        <input type='text' value={name} onChange={(e) => setName(e.target.value)}/> <br/>
-                        <label>Email</label> <br/>
-                        <input type='text' value={JSON.parse(localStorage.getItem('SystemUser')).email} disabled={true}/>
+                        <label>Name</label> <br/>
+                        {/* THE VALUE SHOWS UP, BUT WHEN THE PAGE REFRESHES IT DISAPPEARS */}
+                        <input type='text' value={ name } onChange={(e) => setName(e.target.value)}/> <br/>
+                        
+                        {/*<label>Email</label> <br/>
+                        <input type='text' value={ email } disabled={true}/>
                         <br/> 
+                         THE VALUE SHOWS UP, BUT IT CAN'T BE CHANGED
+                        <label>Name</label> <br/>
+                        <input type='text' value={ user ? user.name : '' } onChange={(e) => setName(e.target.value)}/> <br/>
+                        
+                        <label>Email</label> <br/>
+                        <input type='text' value={ user ? user.email : '' } disabled={true}/>
+                        <br/>  */}
+
                         <button type='submit'>Save</button>
                     </form>
                 </div>

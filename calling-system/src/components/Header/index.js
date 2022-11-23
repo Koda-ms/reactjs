@@ -8,8 +8,8 @@ import './header.css';
 function Header(){
     const { user } = useContext(AuthContext);
     
-    const[avatarUrl, setAvatarUrl] = useState(JSON.parse(user) && JSON.parse(user).avatarUrl);
-    
+    const[avatarUrl, setAvatarUrl] = useState(user && user.avatarUrl);
+
     return(
         <div className='sidebar'>
             <div>
