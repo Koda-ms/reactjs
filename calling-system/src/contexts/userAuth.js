@@ -16,7 +16,7 @@ function AuthProvider({ children }){
             const storageUser = localStorage.getItem('SystemUser');
           
             if(storageUser){
-                setUser(storageUser);
+                setUser(JSON.parse(storageUser));
                 setLoading(false);
             }
             setLoading(false);
@@ -34,19 +34,21 @@ function AuthProvider({ children }){
 
            const userProfile = await firebase.firestore().collection('users').doc(uid).get();
         
-           let data = {
+            let data = {
                 uid: uid,
                 name: userProfile.data().name,
-                email: value.user.email,
-                avatarUrl: userProfile.data().avatarUrl
+                avatarUrl: userProfile.data().avatarUrl,
+                email: value.user.email
             };
             setUser(data);
             storageUser(data);
             setLoadingAuth(false);
+            toast.success("Welcome to the platform!");
         })
         .catch((error) => {
             console.log(error);
             setLoadingAuth(false);
+            toast.error("Ops! Something went wrong");
         })
     }
 
@@ -70,7 +72,7 @@ function AuthProvider({ children }){
                 setUser(data);
                 storageUser(data);
                 setLoadingAuth(false);
-                toast.success("Welcome to the platform!");
+                toast.success("Account created successfully!");
             })
         })
         .catch((error) => {
