@@ -1,14 +1,16 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import 'firebase/compat/storage';
 
 let firebaseConfig = {
-    apiKey: "AIzaSyA_OdS_4Ba_w_WqZ13vPqykePosj3gWWEE",
-    authDomain: "callsystem-2edfd.firebaseapp.com",
-    projectId: "callsystem-2edfd",
-    storageBucket: "callsystem-2edfd.appspot.com",
-    messagingSenderId: "37104387634",
-    appId: "1:37104387634:web:a42f4393069183942e9e2b"
+    apiKey: "AIzaSyBWLXXB54r3X650wiKz58EtbuO0ruQqUL0",
+    authDomain: "systemcall-6d034.firebaseapp.com",
+    projectId: "systemcall-6d034",
+    storageBucket: "systemcall-6d034.appspot.com",
+    messagingSenderId: "283799753815",
+    appId: "1:283799753815:web:815afc5bee7679b653bf12",
+    measurementId: "G-R3Z0K2VR3N"
 };
   
 firebase.initializeApp(firebaseConfig);
