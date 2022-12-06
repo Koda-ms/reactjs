@@ -1,6 +1,5 @@
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { AuthContext } from '../../contexts/userAuth';
 
 function SignUp(){
@@ -14,7 +13,6 @@ function SignUp(){
         if(name !== '' && email !== '' && password !== ''){
             signUp(name, email, password);
         }
-        toast.success("Account created successfully!");
         setName('');
         setEmail('');
         setPassword('');
