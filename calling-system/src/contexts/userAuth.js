@@ -1,6 +1,7 @@
 import { useState, createContext, useEffect } from 'react';
 import firebase from '../services/dbConnection';
 import { toast } from 'react-toastify';
+//import { Navigate } from 'react-router-dom';
 
 export const AuthContext = createContext({});
 
@@ -26,31 +27,31 @@ function AuthProvider({ children }){
     }, []);
 
     //LOGIN USER FUNCTION
-    async function signIn(email, password){
-        setLoadingAuth(true);
-        await firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(async (value) => {
-           let uid = value.user.uid;
+    // async function signIn(email, password){
+    //     setLoadingAuth(true);
+    //     await firebase.auth().signInWithEmailAndPassword(email, password)
+    //     .then(async (value) => {
+    //        let uid = value.user.uid;
 
-           const userProfile = await firebase.firestore().collection('users').doc(uid).get();
-        
-            let data = {
-                uid: uid,
-                name: userProfile.data().name,
-                avatarUrl: userProfile.data().avatarUrl,
-                email: value.user.email
-            };
-            setUser(data);
-            storageUser(data);
-            setLoadingAuth(false);
-            toast.success("Welcome to the platform!");
-        })
-        .catch((error) => {
-            console.log(error);
-            setLoadingAuth(false);
-            toast.error("Ops! Something went wrong");
-        })
-    }
+    //        const userProfile = await firebase.firestore().collection('users').doc(uid).get();
+            
+    //         let data = {
+    //             uid: uid,
+    //             name: userProfile.data().name,
+    //             avatarUrl: userProfile.data().avatarUrl,
+    //             email: value.user.email
+    //         };
+    //         setUser(data);
+    //         storageUser(data);
+    //         setLoadingAuth(false);
+    //         toast.success("Welcome to the platform!");
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //         setLoadingAuth(false);
+    //         toast.error("Ops! Something went wrong");
+    //     })
+    // }
 
     //REGISTER USER FUNCTION
     async function signUp(name, email, password){
@@ -70,7 +71,7 @@ function AuthProvider({ children }){
                     avatarUrl: null
                 };
                 setUser(data);
-                storageUser(data);
+                //storageUser(data);
                 setLoadingAuth(false);
                 toast.success("Account created successfully!");
             })
@@ -86,11 +87,11 @@ function AuthProvider({ children }){
     }
 
     //LOGOUT FUNCTION
-    async function signOut(){
-        await firebase.auth().signOut();
-        localStorage.removeItem('SystemUser');
-        setUser(null);
-    }
+    // async function signOut(){
+    //     await firebase.auth().signOut();
+    //     localStorage.removeItem('SystemUser');
+    //     setUser(null);
+    // }
     
     return(
         //TO WORK FINE, THE value 'signed' MUST BE PASSED AS A BOOLEAN, HOWEVER
@@ -99,9 +100,7 @@ function AuthProvider({ children }){
         <AuthContext.Provider value={{ signed: !!user, 
             user, 
             loading, 
-            signIn, 
             signUp, 
-            signOut, 
             loadingAuth,
             setUser,
             storageUser }}>
