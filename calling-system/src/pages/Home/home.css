@@ -12,11 +12,13 @@
 }
 
 .new{
+    float: right;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 6px;
     padding: .3em .8em;
+    margin-bottom: .5em;
     font-size: 1.2em;
     font-weight: 500;
     background-color: #83bf02;
@@ -31,4 +33,96 @@
 .new:hover{
     background-color: #5fd204;
     transform: scale(1.1);
+}
+
+table{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    border: 1px solid #CCC;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* table caption{
+    font-size: 1.5em;
+    margin: .5em 0 .75em;
+} */
+
+table tr{
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
+}
+
+table th, table td{
+    padding: .62em;
+    text-align: center;
+}
+
+table th{
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+table .badge{
+    border-radius: 3px;
+    color: #fff;
+    padding: 2px 3px;
+}
+
+table td .action{
+    border: 0;
+    padding: 5px;
+    margin-right: 3px;
+    border-radius: 3px;
+    align-items: center;
+    display: inline-block;
+}
+
+table td .action svg{
+    vertical-align: middle;
+}
+
+/* RESPONSIVITY */
+@media screen and (max-width: 600px){
+    table{
+        border: 0;
+    }
+
+    table thead{
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        overflow: hidden;
+        position: absolute;
+        padding: 0;
+    }
+
+    table tr{
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .65em;
+    }
+
+    table td{
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+    }
+
+    table td::before{
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    table td:last-child{
+        border-bottom: 0;
+    }
 }
