@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Customers from './pages/Customers';
+import NewCall from './pages/NewCall';
 
 function App(){
   return(
@@ -20,6 +21,7 @@ function App(){
             <Route element={ <Home/> } path='/home' exact/>
             <Route element={ <Profile/> } path='/settings'/>
             <Route element={ <Customers/> } path='/customers'/>
+            <Route element={ <NewCall/> } path='/newCall'/>
           </Route>
           <Route path='/' element={ <SignIn/> } />
           <Route path='/signup' element={ <SignUp/> } />
