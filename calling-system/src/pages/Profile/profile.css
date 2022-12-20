@@ -52,7 +52,7 @@
     border: 0;
     border-radius: 5px;
     width: 600px;
-    max-width: 600px;
+    /* max-width: 600px; */
     background-color: #e9e7e7;
 }
 
@@ -62,7 +62,7 @@
 
 .form-profile button{
     width: 600px;
-    max-width: 600px;
+    /* max-width: 600px; */
     padding: .5em;
     border: 0;
     border-radius: 5px;
@@ -81,4 +81,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 880px){
+    .form-profile button{
+        width: 400px;
+    }   
+
+    .form-profile input, textarea, select{
+        width: 400px;
+    }
 }
