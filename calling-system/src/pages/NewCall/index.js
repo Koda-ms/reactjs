@@ -4,6 +4,7 @@ import firebase from '../../services/dbConnection';
 import Header from '../../components/Header';
 import Title from '../../components/Title';
 import { FiPlusCircle } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 import './newCall.css';
 
 function NewCall(){
@@ -73,9 +74,28 @@ function NewCall(){
     }
 
     //CALLED WHEN THE REGISTRATION IS DONE
-    function handleRegister(e){
+    async function handleRegister(e){
         e.preventDefault();
-        alert("TEST");
+        
+        //CREATING A NEW CALLING AND ADDING IT TO THE COLLECTION
+        await firebase.firestore().collection('callings').add({
+            created: new Date(),
+            client: customers[customerSelected].fantasyName,
+            clientId: customers[customerSelected].id,
+            subject: subject,
+            status: status,
+            complement: complement,
+            userId: user.uid   //THE USER'S ID THAT TYPED THIS CALL
+        })
+        .then(() => {
+            setCustomerSelected(0);
+            setComplement('');
+            toast.success('Calling created successefully');
+        })
+        .catch((error) => {
+            toast.error('Ops, something got wrong');
+            console.log(error);
+        })
     }
 
     return(
