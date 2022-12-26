@@ -1,0 +1,71 @@
+.modal{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6); /*THE 0.6 NUMBER REPRESENTS THE OPACITY*/
+    z-index: 99;
+}
+
+.modal .container{
+    position: fixed;
+    max-width: 600px;
+    top: 15%;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    padding: 4em 2rem;
+
+    background-color: #FFF;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.close{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #F65835;
+    color: #FFF;
+
+    border: 0;
+    border-radius: 3px;
+    padding: .2em .4em;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+.close svg{
+    margin-right: 5px;
+}
+
+.modal h2{
+    margin-bottom: 1.2em;
+    margin-top: .5em;
+    font-size: 1.7em;
+}
+
+.modal span{
+    font-weight: bold;
+    font-size: 1.1em;
+    padding-right: 4em;
+    color: #121212;
+}
+
+.modal span a{
+    font-weight: 400;
+    padding: 2px 8px;
+    margin-right: 1em;
+    border-radius: 4px;
+}
+
+.row{
+    margin-bottom: 1em;
+}
+
+.modal p{
+    white-space: pre-wrap;
+    padding-top: 0.5em;
+}
