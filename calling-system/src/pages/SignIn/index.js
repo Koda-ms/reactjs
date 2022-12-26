@@ -10,7 +10,7 @@ function SignIn(){
 
     const[email, setEmail] = useState('');
     const[password, setPassword] = useState('');
-    const { storageUser } = useContext(AuthContext);
+    const { storageUser, setUser } = useContext(AuthContext);
 
     //const[user, setUser] = useState(null);
     const[loadingAuth, setLoadingAuth] = useState(false);
@@ -31,14 +31,14 @@ function SignIn(){
            let uid = value.user.uid;
 
            const userProfile = await firebase.firestore().collection('users').doc(uid).get();
-            
+
             let data = {
                 uid: uid,
                 name: userProfile.data().name,
                 avatarUrl: userProfile.data().avatarUrl,
                 email: value.user.email
             };
-            //setUser(data);
+            setUser(data);
             storageUser(data);
             setLoadingAuth(false);
             navigate('/home', { replace: true });
