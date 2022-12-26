@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/userAuth';
 import firebase from '../../services/dbConnection';
 import Header from '../../components/Header';
 import Title from '../../components/Title';
-import { FiPlusCircle } from 'react-icons/fi';
+import { FiEdit2, FiPlusCircle } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import './newCall.css';
 
@@ -11,11 +12,14 @@ function NewCall(){
     const[customers, setCustomers] = useState([]);
     const[loadCustomers, setLoadCustomers] = useState(true);
     const[customerSelected, setCustomerSelected] = useState(0); //POSITION 0 SET AS THE 1ST ONE TO BE SHOWN AS THE DEFAULT VALUE
+    const[editCall, setEditCall] = useState(false);
 
     const[subject, setSubject] = useState('Support');
     const[status, setStatus] = useState('Open');
     const[complement, setComplement] = useState('');
 
+    const navigate = useNavigate();
+    const { id } = useParams();
     const { user } = useContext(AuthContext);
 
     //FIRST SEARCH ON THE APPLICATION TO KNOW IF THERE'S IS ANY CUSTOMERS
@@ -46,6 +50,12 @@ function NewCall(){
                 setCustomers(list);
                 setLoadCustomers(false);
 
+                //IN CASE THE USER REQUIRES AN EDITION. SO, IF 
+                //THERE IS AN ID (true), THE FUNCTION IS CALLED
+                if(id){
+                    handleEditionCall(list);
+                }
+
             })
             .catch((error) => {
                 console.log("There was an error ", error);
@@ -54,7 +64,7 @@ function NewCall(){
             })
         }
         getCustomers();
-    }, []);
+    }, [id]);
 
     //CALLED WHEN A CLIENT IS SELECTED ON THE SELECT TAG
     function handleChangeCustomers(e){
@@ -73,9 +83,32 @@ function NewCall(){
         setStatus(e.target.value);
     }
 
-    //CALLED WHEN THE REGISTRATION IS DONE
+    //CALLED WHEN THE REGISTRATION MUST BE DONE
     async function handleRegister(e){
         e.preventDefault();
+
+        if(editCall){
+            await firebase.firestore().collection('callings').doc(id).update({
+                client: customers[customerSelected].fantasyName,
+                clientId: customers[customerSelected].id,
+                subject: subject,
+                status: status,
+                complement: complement,
+                userId: user.uid
+            })
+            .then(() => {
+                toast.success('Edition saved!');
+                setCustomerSelected(0);
+                setComplement('');
+                navigate('/home');
+            })
+            .catch((error) => {
+                toast.error('Ops! Error in call edition. Try again later.')
+                console.log(error);
+            })
+            //IT SERVES TO STOP THE EXECUTION RIGHT HERE
+            return;
+        }
         
         //CREATING A NEW CALLING AND ADDING IT TO THE COLLECTION
         await firebase.firestore().collection('callings').add({
@@ -98,14 +131,37 @@ function NewCall(){
         })
     }
 
+    //THIS FUNCTION HANDLE THE EDITION BY TAKING A SNAPSHOT FROM THE LIST PRE-SETTED 
+    //WITH IT THE DATA SENT TO EDITION IS THE REQUIRED ONE
+    async function handleEditionCall(list){
+        await firebase.firestore().collection('callings').doc(id).get()
+        .then((snapshot) => {
+            setSubject(snapshot.data().subject);
+            setStatus(snapshot.data().status);
+            setComplement(snapshot.data().complement);
+            
+            //TO SELECT THE CLIENT REQUIRED A SEARCH IS DONE IN THE LIST TO
+            //BY ITS ID, SO CONSIDEREING THE ID FROM THE SNAPSHOT IT CAN BE DONE
+            let index = list.findIndex(item => item.id === snapshot.data().clientId);
+            setCustomerSelected(index);
+            setEditCall(true);
+        })
+    }
+
     return(
         <div>
             <Header/>
 
             <div className='content'>
-                <Title name='New call'>
-                    <FiPlusCircle size={24}/>
-                </Title>
+                {editCall === true ? (
+                    <Title name='Editing call'>
+                        <FiEdit2 size={24}/>
+                    </Title>
+                ) : (
+                    <Title name='New call'>
+                        <FiPlusCircle size={24}/>
+                    </Title>
+                )}
 
                 <div className='container'>
                     <form className='form-profile' onSubmit={handleRegister}>
@@ -165,7 +221,12 @@ function NewCall(){
                         value={complement}
                         onChange={(e) => setComplement(e.target.value)}/>
                     
-                        <button type='submit'>Register</button>
+                        {editCall === true ? (
+                            <button type='submit'>Save</button>
+                        ) : (
+                            <button type='submit'>Register</button>
+                        )}
+                        
 
                     </form>
                 </div>
