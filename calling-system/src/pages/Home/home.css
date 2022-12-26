@@ -85,6 +85,15 @@ table td .action svg{
     vertical-align: middle;
 }
 
+.btn-more{
+    margin: 10px 0;
+    padding: .5em 1em;
+    border: 0;
+    border-radius: 5px;
+    background-color: #181c2e;
+    color: #fff;
+}
+
 /* RESPONSIVITY */
 @media screen and (max-width: 600px){
     table{
@@ -93,11 +102,11 @@ table td .action svg{
 
     table thead{
         border: none;
-        clip: rect(0 0 0 0);
+        clip: rect(0 0 0 0); /*UP - RIGHT - DOWN - LEFT*/
         height: 1px;
         width: 1px;
         margin: -1px;
-        overflow: hidden;
+        overflow: hidden; /*THE PROPERTY clip: rect() DOESN'T WORKS IF THE OVERFLOW: VISIBLE*/
         position: absolute;
         padding: 0;
     }
