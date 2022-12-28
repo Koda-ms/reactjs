@@ -1,0 +1,92 @@
+.container{
+    max-width: 700px;
+    background: #FFF;
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    padding: 30px;
+    margin: 80px auto; /*auto HELPS TO CENTRALIZE THE COMPONENT*/
+}
+
+.container h1{
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.container h1 svg{
+    margin-right: 10px;
+}
+
+.form{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+}
+
+.form input{
+    flex: 1;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 15px;
+}
+
+.form button{
+    background-color: #0D2636;
+    border: 0;
+    border-radius: 4px;
+    padding: 0 10px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ANIMATING SPINNER */
+.i-spinner{
+    animation: i-spinner 2s infinite linear;
+}
+
+/* THIS WORKS ON THE ANIMATION ITSELF BY CREATING MOVIMENTS.
+THE PERCENTAGE IT'S LIKE 'from' AND 'to', SO THE ROTATION IS
+SETTLED IN DEGREES. */
+@keyframes i-spinner{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }    
+}
+
+.repo-list{
+    list-style: none;
+    margin-top: 20px;
+}
+
+.repo-list li{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
+.repo-list:not(:last-child){
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+
+.repo-list a{
+    text-decoration: none;
+    color: #0D2636;
+}
+
+.trash-btn{
+    outline: 0;
+    background: transparent;
+    border: 0;
+    color: #0D2636;
+    padding: 8px 7px;
+}
