@@ -1,0 +1,28 @@
+/* STANDARD SETTINGS */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: 0;
+}
+
+html, body, #root{
+  min-height: 100%; /*THIS WORKS TO THE ENTIRE SCREEN NOT JUST TO THE COMPONENT'S SIZE*/
+}
+
+body{
+  background: #0D2636;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+body, input, button{
+  color: #222;
+  font: 14px 'Roboto', sans-serif;
+}
+
+button{
+  cursor: pointer;
+}
