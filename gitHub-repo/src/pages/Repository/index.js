@@ -11,6 +11,16 @@ function Repository(){
     const[repo, setRepo] = useState({});
     const[issues, setIssues] = useState([]);
     const[loading, setLoading] = useState(true);
+    //THIS const CONTROLS THE PAGES. SO, IT'S SETTLE TO 1, BECAUSE IT'S
+    //THE 1ST PAGE OF ISSUES. IT'S THE DEFAULT.
+    const[page, setPage] = useState(1);
+    //RENDERS THE BUTTON IN ONE TAGE
+    const[filterIssue, setFilterIssue] = useState([
+        {state: 'all', label: 'All issues', active: true},
+        {state: 'open', label: 'Open', active: false},
+        {state: 'closed', label: 'Closed', active: false}
+    ]);
+    const[filterIndex, setFilterIndex] = useState(0);
 
     useEffect(() => {
 
@@ -24,7 +34,7 @@ function Repository(){
                 api.get(`/repos/${repoName}`),
                 api.get(`/repos/${repoName}/issues`, {
                     params: {
-                        state: 'open',
+                        state: filterIssue.find(f => f.active).state,
                         per_page: 5
                     }
                 })
@@ -34,7 +44,37 @@ function Repository(){
             setLoading(false);
         }
         loadRepo();
-    }, [repository]);
+    }, [repository, filterIssue]);
+
+    //THIS HOOK UPDATES THE ISSUE LIST ONCE ANY OF THE BUTTONS 'NEXT'
+    //OR 'BACK' ARE CLICKED.
+    useEffect(() => {
+
+        async function loadIssues(){
+            const repoName = decodeURIComponent(repository);
+
+            const response = await api.get(`/repos/${repoName}/issues`, {
+                params: {
+                    state: filterIssue[filterIndex].state,
+                    page: page,
+                    per_page: 5,
+                },
+            });
+            setIssues(response.data);
+        }
+
+        loadIssues();
+    }, [repository, filterIssue, filterIndex, page]);
+
+    //THIS UPDATES THE STATE page SO IT MAY MOVE TO NEXT ONE
+    //OR GO BACK TO THE PREVIOUS
+    function handlePage(action){
+        setPage(action === 'next' ? page + 1 : page - 1);
+    }
+
+    function handleFilter(e){
+        setFilterIndex(e.target.value);
+    }
 
     if(loading){
         return(
@@ -52,10 +92,61 @@ function Repository(){
                 <h1>{repo.name}</h1>
                 <p>{repo.description}</p>
             </header>
-        </div>
-        
-    );
 
+            <div className="issue-filter">
+                {/* {filterIssue.map((filter, index) => {
+                    return(
+                        <button type="button" key={filter.label}
+                        active={filterIndex}
+                        onClick={() => handleFilter(index)}>
+                            {filter.label}
+                        </button>
+                    );
+                })} */}
+                <select value={filterIndex} onChange={handleFilter}>
+                {filterIssue.map((filter, index) => {
+                    return(
+                        <option key={filter.label} value={index}>
+                            {filter.label}
+                        </option>
+                    );
+                })}
+                </select>
+            </div>
+            
+            {issues.map((issue) => {
+                return(
+                    <ul className="repo-list">
+                        <li key={String(issue.id)}>
+                            <img src={issue.user.avatar_url} alt={issue.user.login}/>
+
+                            <div className="issue-text">
+                                <strong>
+                                    <a href={issue.html_url}>{issue.title}</a>
+                                    
+                                    {issue.labels.map((label) => {
+                                        return(
+                                            <span key={String(label.id)}>{label.name}</span>
+                                        )
+                                    })}
+                                </strong>
+
+                                <p>{issue.user.login}</p>
+                            </div>
+                        </li>
+                    </ul>
+                );
+            })}
+            <div className="action">
+                <button type="button" 
+                onClick={() => handlePage('back')}
+                disabled={page < 2}>Back</button>
+
+                <button type="button" 
+                onClick={() => handlePage('next')}>Next</button>
+            </div>
+        </div>
+    );
 }
 
 export default Repository;
