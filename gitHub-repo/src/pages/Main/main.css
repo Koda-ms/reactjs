@@ -62,7 +62,7 @@ SETTLED IN DEGREES. */
 
 .repo-list{
     list-style: none;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .repo-list li{
@@ -70,7 +70,7 @@ SETTLED IN DEGREES. */
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0 15px;
+    padding: 15px 10px;
 }
 
 .repo-list:not(:last-child){
