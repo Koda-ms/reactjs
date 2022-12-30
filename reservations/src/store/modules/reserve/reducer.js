@@ -3,7 +3,7 @@ import produce from 'immer';
 export default function reserve( state = [], action ){
  
     switch (action.type) {
-        case 'ADD_RESERVE':
+        case 'ADD_RESERVE_SUCCESS':
 
             //THE produce HELPS ON WORKING WITH STATES' VALUES.
             //draft IS A COPY FROM THE BASE STATE AND WITH IT IT'S

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MdFlightTakeoff } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
-import { addReserve } from '../../store/modules/reserve/actions';
+import { addReserveRequest } from '../../store/modules/reserve/actions';
 import api from '../../services/api';
 import './home.css'; 
 
@@ -22,8 +22,8 @@ function Home() {
     //THIS FUNCTION SEND AN ACTION TO THE REDUCER.
     //THE dispatch KEEPS THE ACTION CLASSIFIED BY
     //ITS TYPE (STATE) AND THE CONTENT OF ITSELF.
-    function handleAdd(trip){
-        dispatch(addReserve(trip));
+    function handleAdd(id){
+        dispatch(addReserveRequest(id));
     }
 
     return(
@@ -36,7 +36,7 @@ function Home() {
                             <strong>{trip.title}</strong>
                             <span>Status: {trip.status ? 'Available' : 'Unavailable'}</span>
 
-                            <button type='button' onClick={()=> handleAdd(trip)}>
+                            <button type='button' onClick={()=> handleAdd(trip.id)}>
                                 <div>
                                     <MdFlightTakeoff color= '#fff' size={14}/>
                                 </div>
