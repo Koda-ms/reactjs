@@ -1,0 +1,33 @@
+/* STANDARD SETTINGS */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+body{
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+  background-color: #e8e8e8;
+  /* background-color: #5fa04c; */
+  font: 14px 'Roboto', sans-serif;
+}
+
+html, body, #root{
+  /* max-width: 1020px;
+  margin: 0 auto;
+  padding: 0 20px 50px; */
+  height: 100%;
+}
+
+a{
+  text-decoration: none;
+}
+
+button{
+  cursor: pointer;
+  outline: 0;
+}
+
+ul, ol{
+  list-style: none;
+}
