@@ -3,6 +3,8 @@
 //ITS DISPATCHES WOULD BE OVERLOADED AND DISORGANIZED. FOR
 //THIS REASON, THIS SEPARATED FILE WAS CREATED.
 
+
+//LISTENNED BY SAGAS.JS
 export function addReserveRequest(id){
     return {
         type: 'ADD_RESERVE_REQUEST',
@@ -10,10 +12,12 @@ export function addReserveRequest(id){
     };
 }
 
-export function addReserveSuccess(trip){
+//LISTENNED BY REDUCER.JS
+export function addReserveSuccess(trip, stockAmount){ 
     return {
         type: 'ADD_RESERVE_SUCCESS',
-        trip
+        trip,
+        stockAmount
     };
 }
 
@@ -24,10 +28,11 @@ export function removeReserve(id){
     };
 }
 
-export function updateReserveAmount(id, amount){
+export function updateReserveAmount(id, amount, stockAmount){
     return{
         type: 'UPDATE_AMOUNT',
         id,
-        amount
+        amount,
+        stockAmount
     };
 }
